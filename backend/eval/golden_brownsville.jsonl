@@ -1,0 +1,10 @@
+{"question": "What is the maximum building height in the R-1 single-family district?", "mode": "staff", "must_contain": ["35"], "must_cite": "4.3.1"}
+{"question": "What is the minimum lot area in the R-1 district?", "mode": "staff", "must_contain": ["5,000"], "must_cite": "4.3.1"}
+{"question": "What is the minimum lot width in the R-1 district?", "mode": "staff", "must_contain": ["50"], "must_cite": "4.3.1"}
+{"question": "What is the minimum lot area in the R-2 district?", "mode": "staff", "must_contain": ["2,000"], "must_cite": "4.3.1"}
+{"question": "How wide does a lot need to be for a townhome in the R-2 district?", "mode": "public", "must_contain": ["25"], "must_cite": "4.3.1"}
+{"question": "¿Cuál es la altura máxima de construcción en el distrito R-1?", "mode": "public", "language": "es", "must_contain": ["35"], "must_cite": "4.3.1"}
+{"question": "In a special flood hazard area, how high must the lowest floor of a new house be built?", "mode": "public", "must_contain": ["base flood elevation"], "must_cite": "308-14"}
+{"question": "Which zoning districts exist in Brownsville for residential development?", "mode": "staff", "must_contain": [], "must_cite": "4.3.1"}
+{"question": "What is the maximum building height in an SF-3 zone in Austin?", "mode": "public", "expect_refusal": true}
+{"question": "What is the tallest roller coaster at Disney World?", "mode": "public", "expect_refusal": true}

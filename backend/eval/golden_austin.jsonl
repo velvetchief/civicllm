@@ -1,0 +1,10 @@
+{"question": "What is the maximum building height for a home in an SF-3 zone?", "mode": "staff", "must_contain": ["35"], "must_cite": "25-2-492"}
+{"question": "What is the minimum lot size in an SF-3 district?", "mode": "staff", "must_contain": ["5,750"], "must_cite": "25-2-492"}
+{"question": "What is the minimum lot size in an SF-2 district?", "mode": "staff", "must_contain": ["5,750"], "must_cite": "25-2-492"}
+{"question": "How tall can a building be in an MF-4 district?", "mode": "staff", "must_contain": ["60"], "must_cite": "25-2-492"}
+{"question": "What is the maximum building height in an SF-1 zone?", "mode": "public", "must_contain": ["35"], "must_cite": ["25-2-492", "BUILDING HEIGHT"]}
+{"question": "What is the front yard setback for SF-3?", "mode": "staff", "must_contain": ["25"], "must_cite": "25-2-492"}
+{"question": "What is the maximum impervious cover in an SF-3 district?", "mode": "staff", "must_contain": ["45"], "must_cite": "25-2-492"}
+{"question": "What zoning districts allow a bed and breakfast as a permitted or conditional use?", "mode": "staff", "must_contain": [], "must_cite": "25-2"}
+{"question": "What is the tallest roller coaster at Disney World?", "mode": "public", "expect_refusal": true}
+{"question": "What is the maximum building height in downtown Seattle?", "mode": "public", "expect_refusal": true}

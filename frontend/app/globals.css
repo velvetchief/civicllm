@@ -1,0 +1,451 @@
+/* ————————————————————————————————————————————————————————————————
+   CivicLLM — Direction B ("Cursor" design language, adapted)
+   Warm-cream editorial canvas, near-black warm ink, hairline white cards,
+   ONE orange accent (AA-adjusted #d04200 for text/buttons; #f54e00 only for
+   non-text moments), weight-400 display with negative tracking, mono for
+   section refs and quoted code. All text pairs hold WCAG 2.1 AA.
+   ———————————————————————————————————————————————————————————————— */
+
+:root {
+  --canvas: #f7f7f4;
+  --canvas-soft: #fafaf7;
+  --card: #ffffff;
+  --ink: #26251e;
+  --body: #5a5852;
+  --muted: #6d6a60;      /* darkened from #807d72 for 4.5:1 on card/canvas */
+  --muted-soft: #807d72; /* large/decorative text only */
+  --hair: #e6e5e0;
+  --hair-soft: #efeee8;
+  --hair-strong: #cfcdc4;
+
+  --accent: #d04200;        /* text + buttons — 4.7:1 on white */
+  --accent-press: #b23800;
+  --accent-bright: #f54e00; /* non-text accents only (rings, marks) */
+  --success: #146c4e; /* 6.39:1 on white, 5.96:1 on canvas */
+  --mint: #9fc9a2;
+  --error-ink: #a02440;
+  --error-bg: #fbeef1;
+
+  --sans: var(--font-sans), "Helvetica Neue", system-ui, Arial, sans-serif;
+  --mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font: 400 16px/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.shell { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+main.shell { padding-bottom: 150px; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
+
+/* ————— Header: quiet canvas bar, hairline rule ————— */
+
+header.top {
+  background: var(--canvas);
+  border-bottom: 1px solid var(--hair);
+}
+header.top .shell {
+  max-width: 960px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px 20px; padding-top: 14px; padding-bottom: 14px;
+}
+.brand { min-width: 0; }
+.brand h1, .brand b {
+  font: 600 16px/1.35 var(--sans); letter-spacing: -0.1px; margin: 0;
+}
+.brand span { display: block; font: 400 13px/1.4 var(--sans); color: var(--muted); }
+.brand-link { color: inherit; text-decoration: none; }
+.brand-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Mode/language tabs: text with an accent underline for the active one */
+.toggles { display: flex; gap: 4px 18px; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; gap: 14px; }
+.seg + .seg { border-left: 1px solid var(--hair-strong); padding-left: 18px; }
+.seg button {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  font: 500 14px/1.4 var(--sans); color: var(--muted);
+  padding: 6px 1px; border-bottom: 2px solid transparent; border-radius: 0;
+}
+.seg button:hover { color: var(--ink); }
+.seg button.on { color: var(--ink); border-bottom-color: var(--accent-bright); }
+
+/* Full-width warning bar below the header (tenant-load failure etc.).
+   Ink on #faf3df = 13.88:1. */
+.notice-warn {
+  background: #faf3df; color: var(--ink);
+  border-top: 1px solid #e7d9a8; border-bottom: 1px solid #e7d9a8;
+  padding: 10px 24px;
+  font: 400 14px/1.5 var(--sans);
+  margin: 0;
+}
+
+/* ————— Scope notice ————— */
+
+.scope {
+  display: flex; gap: 16px; align-items: flex-start; justify-content: space-between;
+  background: var(--card); border: 1px solid var(--hair); border-radius: 8px;
+  padding: 14px 18px; margin: 24px 0 4px;
+  font-size: 0.9rem; color: var(--body);
+}
+.scope p { margin: 0; }
+.scope b { color: var(--ink); font-weight: 600; }
+.scope button {
+  flex: none; appearance: none; cursor: pointer;
+  border: 1px solid var(--hair-strong); background: var(--canvas); color: var(--ink);
+  font: 500 13px/1 var(--sans); padding: 8px 14px; border-radius: 6px;
+}
+.scope button:hover { border-color: var(--ink); }
+
+/* ————— Hero + example questions ————— */
+
+.hero { padding: 58px 0 6px; }
+.hero h2 {
+  font: 400 clamp(30px, 5.4vw, 44px)/1.15 var(--sans);
+  letter-spacing: -0.03em; margin: 0 0 14px; text-wrap: balance;
+}
+.hero p { font: 400 16.5px/1.6 var(--sans); color: var(--body); margin: 0; max-width: 54ch; }
+
+.examples-label {
+  font: 600 11px/1.4 var(--sans); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin: 36px 0 0;
+}
+.examples { border-top: 1px solid var(--hair); margin-top: 10px; }
+.examples button {
+  appearance: none; cursor: pointer; display: flex; width: 100%;
+  align-items: center; justify-content: space-between; gap: 16px; text-align: left;
+  background: none; border: 0; border-bottom: 1px solid var(--hair); border-radius: 0;
+  padding: 15px 4px; font: 400 15.5px/1.5 var(--sans); color: var(--ink);
+}
+.examples button::after { content: "→"; color: var(--muted-soft); flex: none; }
+.examples button:hover { background: var(--canvas-soft); }
+.examples button:hover::after { color: var(--accent); }
+
+/* ————— Question turns ————— */
+
+.turn { margin: 46px 0 0; }
+.turn + .turn { border-top: 1px solid var(--hair); padding-top: 40px; }
+.q {
+  font: 400 24px/1.28 var(--sans); letter-spacing: -0.015em;
+  margin: 0 0 20px; text-wrap: balance;
+  overflow-wrap: anywhere; /* long pasted URLs must not overflow at 360px */
+}
+.q-label {
+  display: block; font: 600 11px/1.4 var(--sans);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+
+.thinking { color: var(--muted); font: 400 14.5px/1.5 var(--sans); margin: 14px 0; }
+/* Quiet cancel affordance sitting inline beside the thinking line */
+.cancel-btn {
+  appearance: none; cursor: pointer;
+  background: none; color: var(--muted); /* 5.04:1 on canvas */
+  border: 1px solid var(--hair-strong); border-radius: 6px;
+  font: 500 12.5px/1 var(--sans); padding: 6px 12px;
+  margin-left: 12px; vertical-align: 1px;
+}
+.cancel-btn:hover { color: var(--ink); border-color: var(--ink); }
+.thinking::before {
+  content: ""; display: inline-block; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--accent-bright); margin-right: 9px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* ————— Answer card ————— */
+
+.answer {
+  background: var(--card); border: 1px solid var(--hair); border-radius: 8px;
+  padding: 22px 26px;
+}
+.answer-text {
+  font: 400 17px/1.65 var(--sans);
+  white-space: pre-wrap;      /* the model's paragraph breaks must survive */
+  overflow-wrap: anywhere;
+}
+.answer-text b, .answer-text strong { font-weight: 600; color: var(--accent); }
+
+.answer.refusal { background: var(--canvas-soft); }
+/* Accent #d04200 is 4.39:1 on canvas-toned surfaces — below AA. Bold stays ink
+   on refusal cards; accent bold is for white cards only. */
+.answer.refusal .answer-text b, .answer.refusal .answer-text strong { color: var(--ink); }
+.answer.error {
+  background: var(--error-bg); border-color: #eccdd5; color: var(--error-ink);
+}
+
+/* Retry after a failed turn: white card, accent border + text (4.71:1 on white) */
+.retry-btn {
+  appearance: none; cursor: pointer;
+  background: var(--card); color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 6px;
+  font: 500 13.5px/1 var(--sans); padding: 10px 16px;
+  margin-top: 14px;
+}
+.retry-btn:hover { color: var(--accent-press); border-color: var(--accent-press); }
+
+/* Inline citation chips [n] — quiet mono squares (sup.cite wraps an <a>) */
+.cite {
+  display: inline-block; padding: 1px 5px; margin-left: 3px; vertical-align: 2px;
+  font: 400 12px/1.3 var(--mono); color: var(--body);
+  background: var(--canvas); border: 1px solid var(--hair); border-radius: 4px;
+  cursor: pointer;
+}
+.cite, .cite a { text-decoration: none; }
+.cite a { color: inherit; }
+.cite:hover { border-color: var(--hair-strong); color: var(--ink); }
+
+/* Meta row: inside-card feel via hairline top border */
+.meta {
+  display: flex; gap: 8px 18px; align-items: center; flex-wrap: wrap;
+  margin: 0; padding: 12px 2px 0; border-top: 1px solid var(--hair-soft); margin-top: 16px;
+}
+.answer + .meta { border-top: 0; padding-top: 10px; margin-top: 10px; }
+.badge { font: 400 13px/1.4 var(--sans); color: var(--muted); }
+.badge.grounded { color: var(--success); }
+.badge.grounded::before {
+  content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mint); margin-right: 7px;
+}
+.badge.routed { color: var(--body); }
+/* Canceled/errored-mid-stream answers keep their partial text under this label.
+   #8a5a00 on #faf3df = 5.35:1 (and 5.52:1 on canvas). */
+.badge.incomplete {
+  color: #8a5a00; background: #faf3df;
+  border: 1px solid #e7d9a8; border-radius: 4px;
+  padding: 3px 8px;
+}
+
+/* ————— Section labels ————— */
+
+.sources h3, .related h3, .steps h3 {
+  font: 600 11px/1.4 var(--sans); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin: 38px 0 12px;
+}
+
+/* ————— Sources ————— */
+
+.sources ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.source {
+  background: var(--card); border: 1px solid var(--hair); border-radius: 8px;
+  padding: 18px 22px;
+  transition: border-color 400ms ease, box-shadow 400ms ease;
+}
+.source.flash { border-color: var(--accent-bright); box-shadow: 0 0 0 3px rgba(245, 78, 0, 0.12); }
+.source-head { margin: 0; display: flex; align-items: baseline; gap: 12px; }
+.num { font: 400 12px/1 var(--mono); color: var(--muted); }
+.source-head b { font: 600 14.5px/1.4 var(--mono); letter-spacing: -0.1px; }
+.source-title { margin: 5px 0 0 27px; font: 400 13.5px/1.5 var(--sans); color: var(--body); }
+.crumb { margin: 4px 0 0 27px; font: 400 12px/1.5 var(--sans); color: var(--muted); }
+.source > a {
+  display: inline-block; margin: 12px 0 0 27px;
+  font: 500 13.5px/1.4 var(--sans); color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-color: var(--hair-strong);
+}
+.source > a:hover { text-decoration-color: var(--ink); }
+
+/* Quoted code text: mono well */
+.quote-details { margin: 12px 0 0 27px; }
+.quote-details summary {
+  cursor: pointer; user-select: none; list-style: none;
+  font: 500 13.5px/1.4 var(--sans); color: var(--ink); padding: 4px 0;
+}
+/* Older Safari ignores list-style:none on summary — kill its native marker
+   so the ▸ pseudo-element isn't doubled. */
+summary::-webkit-details-marker { display: none; }
+.quote-details summary::before { content: "▸ "; color: var(--muted); }
+.quote-details[open] summary::before { content: "▾ "; }
+.quote-details summary:hover { color: var(--accent); }
+.quote {
+  margin: 8px 0 2px; padding: 14px 18px;
+  max-height: 280px; overflow-y: auto;
+  background: var(--canvas); border: 1px solid var(--hair-soft); border-radius: 6px;
+  font: 400 12.5px/1.7 var(--mono); color: var(--body);
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+
+/* ————— Related rules ————— */
+
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-block; padding: 8px 12px;
+  font: 400 12.5px/1 var(--mono); color: var(--body);
+  background: var(--card); border: 1px solid var(--hair); border-radius: 6px;
+  text-decoration: none;
+}
+a.chip:hover { border-color: var(--hair-strong); color: var(--ink); }
+
+/* ————— Next steps: quiet left-ruled list ————— */
+
+.steps ul {
+  list-style: none; margin: 0; padding: 2px 0 2px 22px;
+  border-left: 2px solid var(--hair-strong);
+  display: grid; gap: 15px;
+}
+.steps.prominent ul { border-left-color: var(--accent-bright); }
+.steps li { font: 400 14px/1.5 var(--sans); }
+.steps b { font-weight: 600; color: var(--ink); }
+.steps a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hair-strong); }
+.steps a:hover { text-decoration-color: var(--ink); }
+.step-detail { display: block; color: var(--muted); font-size: 13px; margin-top: 1px; }
+
+.disclaimer {
+  margin: 22px 2px 0; font: 400 12.5px/1.6 var(--sans); color: var(--muted);
+}
+
+/* ————— Staff tools ————— */
+
+.tools { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.tool {
+  appearance: none; cursor: pointer;
+  background: var(--card); color: var(--body);
+  border: 1px solid var(--hair); border-radius: 6px;
+  font: 500 13px/1 var(--sans); padding: 9px 14px;
+}
+.tool:hover { border-color: var(--hair-strong); color: var(--ink); }
+
+/* ————— Ask bar: white card row, one orange button ————— */
+
+form.ask {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+  padding: 34px 0 max(18px, env(safe-area-inset-bottom));
+  background: linear-gradient(transparent, var(--canvas) 42%);
+  pointer-events: none;
+}
+form.ask .inner {
+  pointer-events: auto;
+  max-width: 720px; margin: 0 auto; padding: 0 24px;
+  display: flex;
+}
+form.ask .inner > * { min-width: 0; }
+form.ask input {
+  flex: 1; border: 1px solid var(--hair); border-right: 0;
+  border-radius: 10px 0 0 10px;
+  background: var(--card); box-shadow: 0 4px 18px -8px rgba(38, 37, 30, 0.14);
+  padding: 15px 18px; font: 400 16px/1.4 var(--sans); color: var(--ink);
+}
+form.ask input::placeholder { color: var(--muted); }
+form.ask input:focus { outline: 2px solid var(--accent-bright); outline-offset: -1px; }
+form.ask button {
+  flex: none; appearance: none; cursor: pointer;
+  background: var(--accent); color: #fff; border: 1px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  font: 500 15px/1 var(--sans); padding: 0 24px; min-height: 52px;
+  box-shadow: 0 4px 18px -8px rgba(38, 37, 30, 0.14);
+}
+form.ask button:hover:not(:disabled) { background: var(--accent-press); border-color: var(--accent-press); }
+/* Busy/disabled state must stay perceivable: #8a877c is 3.35:1 against the
+   canvas (≥3:1 UI-component contrast), so the "…" state reads as a state
+   instead of vanishing. */
+form.ask button:disabled { background: #8a877c; border-color: #8a877c; cursor: default; }
+
+/* ————— Footer ————— */
+
+footer.site {
+  margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--hair);
+  font: 400 12.5px/1.6 var(--sans); color: var(--muted);
+}
+footer.site p { margin: 0 0 6px; }
+.fresh { font: 400 11.5px/1.6 var(--mono); }
+.linklike {
+  appearance: none; background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--ink); font: inherit;
+  text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--hair-strong);
+}
+.linklike:hover { text-decoration-color: var(--ink); }
+
+/* ————— Permalink page ————— */
+
+.follow-up-row { margin: 30px 0; }
+.follow-up {
+  display: inline-block; background: var(--accent); color: #fff;
+  font: 500 14px/1 var(--sans); padding: 13px 20px; border-radius: 6px;
+  text-decoration: none;
+}
+.follow-up:hover { background: var(--accent-press); }
+
+/* ————— Responsive ————— */
+
+@media (max-width: 620px) {
+  .shell { padding: 0 18px; }
+  .hero { padding: 40px 0 4px; }
+  .q { font-size: 20px; }
+  .answer { padding: 18px; }
+  .answer-text { font-size: 16px; }
+  form.ask .inner { padding: 0 14px; }
+  .source-title, .crumb, .quote-details, .source > a { margin-left: 0; }
+}
+
+/* Generous touch targets on coarse pointers — interactive affordances get a
+   ≥44px hit area (visible growth where the design allows, invisible ::after
+   overlays where it doesn't). Desktop density is untouched. */
+@media (pointer: coarse) {
+  .seg button, .tool, .scope button { padding-top: 12px; padding-bottom: 12px; }
+  .examples button { padding-top: 16px; padding-bottom: 16px; }
+  .quote-details summary { padding: 13px 0; } /* 18.9px line + 26px ≈ 45px */
+
+  /* Cite chips grow slightly AND carry a centered 44×44 invisible hit area
+     (surrounding prose isn't interactive, so the overlay steals nothing). */
+  .cite { position: relative; padding: 5px 8px; }
+  .cite a::after {
+    content: ""; position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 44px; height: 44px;
+  }
+
+  .chip { padding: 15px 16px; } /* 12.5px line + 30px + 2px border ≈ 44.5px */
+
+  .source > a { padding: 13px 0; margin-top: 2px; } /* ≈45px, same visual slot */
+
+  .cancel-btn, .retry-btn { padding-top: 15px; padding-bottom: 15px; }
+
+  .linklike { position: relative; }
+  .linklike::after {
+    content: ""; position: absolute;
+    left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: max(100%, 44px); height: 44px;
+  }
+}
+
+/* Mobile header compression: brand + toggle rows land around ≤130px total.
+   Must come after the coarse block so this density wins on phones. */
+@media (max-width: 640px) {
+  header.top .shell {
+    padding-top: 10px; padding-bottom: 10px; gap: 4px 14px;
+  }
+  .brand h1, .brand b { font-size: 14px; }
+  .brand span { font-size: 11.5px; }
+  .toggles { gap: 2px 12px; }
+  .seg { gap: 10px; }
+  .seg + .seg { padding-left: 12px; }
+  .seg button { font-size: 13px; padding-top: 5px; padding-bottom: 5px; }
+}
+
+/* Motion is a preference, not a requirement */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

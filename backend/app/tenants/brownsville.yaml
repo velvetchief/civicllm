@@ -1,0 +1,88 @@
+display_name: City of Brownsville — Planning & Redevelopment Services
+corpus_name: Brownsville Development Regulations (Unified Development Code)
+citation_noun: section
+source_link_label: View on Municode
+
+modes:
+  staff:
+    persona: >
+      You assist City of Brownsville planning, zoning, and permitting staff. Answer
+      technical development questions precisely from the Unified Development Code and
+      related chapters. Include governing section numbers, quote exact figures (heights,
+      setbacks, lot sizes, fees, thresholds) from the provided sections, and show the
+      reasoning chain across sections when more than one applies.
+    disclaimer: ""
+  public:
+    persona: >
+      You help Brownsville residents, property owners, and builders understand the city's
+      development rules in plain language. Avoid jargon; explain what the rule means
+      practically. Always point to the official source so the reader can verify.
+    disclaimer: >
+      This is an AI-generated summary for informational purposes only — it is not legal
+      advice or an official determination. Verify with the linked official code sections
+      or contact Planning & Redevelopment Services.
+    disclaimer_es: >
+      Este es un resumen generado por inteligencia artificial, solo para fines
+      informativos — no es asesoría legal ni una determinación oficial. Verifique con las
+      secciones oficiales del código enlazadas o comuníquese con el Departamento de
+      Planificación y Reurbanización (Planning & Redevelopment Services).
+
+scope_statement: >
+  I answer questions about Brownsville's development regulations — zoning districts,
+  building and lot standards, subdivisions, signs, flood damage prevention, and impact
+  fees — with citations to the official code. I can't give legal advice, decide your
+  case, or see your property's permit history.
+scope_statement_es: >
+  Respondo preguntas sobre las regulaciones de desarrollo de Brownsville — distritos de
+  zonificación, estándares de construcción y lotes, subdivisiones, letreros, prevención
+  de daños por inundación y cuotas de impacto — con citas al código oficial. No puedo
+  dar asesoría legal, decidir su caso, ni ver el historial de permisos de su propiedad.
+
+# Every example is verified to return a grounded, cited answer in EN and ES
+# against the current corpus — a refusing suggestion is a bad first impression.
+# Re-verify after any re-ingest (grounded/refused probe against /api/chat).
+example_questions:
+  - What is the maximum building height in a single-family residential district?
+  - What are the setback requirements in the R-1 single-family district?
+  - What are the rules for building in a flood zone?
+  - What are the sign regulations for a business?
+example_questions_es:
+  - ¿Cuál es la altura máxima de construcción en un distrito residencial unifamiliar?
+  - ¿Cuáles son los requisitos de retiro (setback) en el distrito unifamiliar R-1?
+  - ¿Cuáles son las reglas para construir en una zona de inundación?
+  - ¿Cuáles son las regulaciones de letreros para un negocio?
+
+channels:
+  - label: Contact Planning & Redevelopment Services
+    label_es: Comuníquese con Planificación y Reurbanización
+    detail: "1034 E. Levee St, 2nd Floor · 956-546-4357 (HELP)"
+    detail_es: "1034 E. Levee St, segundo piso · 956-546-4357 (HELP)"
+    url: https://www.brownsvilletx.gov/360/Planning-Redevelopment-Services
+  - label: Apply or check permits online (Accela Citizen Access)
+    label_es: Solicite o consulte permisos en línea (Accela Citizen Access)
+    detail: The city's official permitting portal.
+    detail_es: El portal oficial de permisos de la ciudad.
+    url: https://aca-prod.accela.com/brownsville/Default.aspx
+  - label: Building Permits and Inspections Division
+    label_es: División de Permisos de Construcción e Inspecciones
+    detail: For permit and inspection questions.
+    detail_es: Para preguntas sobre permisos e inspecciones.
+    url: https://www.brownsvilletx.gov/1914/Building-Permits-and-Inspections-Divisio
+
+ingest:
+  source: municode
+  client_name: Brownsville
+  state: TX
+  product_name: Code of Ordinances
+  product_slug: code_of_ordinances
+  # Subpart B — the full UDC (Articles 1–6) + boom-relevant standalone chapters.
+  root_nodes:
+    - "PTIICOOR_ART1GEPR"        # UDC Art. 1 General Provisions
+    - "PTIICOOR_ART2ADREPR"      # UDC Art. 2 Administration & Review Procedures
+    - "PTIICOOR_ART3SURE"        # UDC Art. 3 Subdivision Regulations
+    - "PTIICOOR_ART4ZORE"        # UDC Art. 4 Zoning Regulations
+    - "PTIICOOR_ART5SURE"        # UDC Art. 5 Supplemental Regulations
+    - "PTIICOOR_ART6DE"          # UDC Art. 6 Definitions
+    - "PTIICOOR_CH308FLDAPR"     # Flood Damage and Prevention
+    - "PTIICOOR_CH314IMFE"       # Impact Fees
+    - "PTIICOOR_CH328SI"         # Signs

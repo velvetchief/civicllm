@@ -1,0 +1,33 @@
+# Render blueprint for the CivicLLM backend.
+# Provision with the Render dashboard ("New +" -> "Blueprint") pointed at this repo,
+# or `render blueprint launch`.
+services:
+  - type: web
+    name: civicllm-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    # nomic-embed-text needs ~1.5GB RAM; Standard (2GB) is the floor.
+    plan: standard
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: LLM_PROVIDER
+        value: anthropic
+      - key: ANTHROPIC_MODEL
+        value: claude-sonnet-5
+      # Set in the dashboard (secret). Never committed.
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: OLLAMA_BASE_URL
+        value: http://127.0.0.1:11434
+      - key: OLLAMA_EMBED_MODEL
+        value: nomic-embed-text
+      # Browser calls are same-origin via the Vercel rewrite, but set the real
+      # origin so direct/browser access also works.
+      - key: CORS_ORIGINS
+        value: https://your-frontend.example.com
+      # Postgres + pgvector lives on Supabase (managed via the Supabase tooling).
+      # Set the Session-pooler connection string in the dashboard (secret).
+      - key: DATABASE_URL
+        sync: false

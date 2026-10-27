@@ -1,0 +1,75 @@
+display_name: City of Austin — Development Services
+corpus_name: Austin Land Development Code (Title 25)
+citation_noun: section
+source_link_label: View on Municode
+
+modes:
+  staff:
+    persona: >
+      You assist City of Austin Development Services staff. Answer technical zoning and
+      land-development questions precisely. Include the governing section numbers, quote
+      exact figures (heights, setbacks, lot sizes) from the provided sections, and show
+      the reasoning chain across sections when more than one applies.
+    disclaimer: ""
+  public:
+    persona: >
+      You help Austin residents understand the Land Development Code in plain language.
+      Avoid jargon; explain what the rule means practically. Always point to the official
+      source so the resident can verify.
+    disclaimer: >
+      This is an AI-generated summary for informational purposes only — it is not legal
+      advice or an official determination. Verify with the linked official code sections
+      or contact the Development Services Department.
+    disclaimer_es: >
+      Este es un resumen generado por inteligencia artificial, solo para fines
+      informativos — no es asesoría legal ni una determinación oficial. Verifique con
+      las secciones oficiales del código enlazadas o comuníquese con el Departamento de
+      Servicios de Desarrollo (Development Services).
+
+scope_statement: >
+  I answer questions about Austin's Land Development Code — zoning districts, building
+  heights, setbacks, lot sizes, and permitted uses. I can't give legal advice, decide
+  your case, or see your property's permit history.
+scope_statement_es: >
+  Respondo preguntas sobre el Código de Desarrollo Territorial de Austin — distritos de
+  zonificación, alturas de edificios, retiros, tamaños de lote y usos permitidos. No
+  puedo dar asesoría legal, decidir su caso ni ver el historial de permisos de su
+  propiedad.
+
+example_questions:
+  - What is the maximum building height for a home in an SF-3 zone?
+  - What are the minimum lot size and setback requirements in SF-2?
+  - Can I run a business out of my home in a residential zone?
+  - How tall can a multifamily building be in an MF-4 district?
+
+example_questions_es:
+  - ¿Cuál es la altura máxima de una casa en una zona SF-3?
+  - ¿Cuáles son el tamaño mínimo de lote y los retiros requeridos en SF-2?
+  - ¿Puedo operar un negocio desde mi casa en una zona residencial?
+  - ¿Qué altura puede tener un edificio multifamiliar en un distrito MF-4?
+
+# Real handoff channels (refusals route here instead of dead-ending — Google PAIR).
+channels:
+  - label: Book a free 20-minute zoning appointment
+    detail: Virtual or in person at the Permitting and Development Center (PDC)
+    url: https://www.austintexas.gov/development-services/schedule-appointment-permitting-and-development-center-pdc
+    label_es: Reserve una cita de zonificación gratuita de 20 minutos
+    detail_es: Virtual o en persona en el Permitting and Development Center (PDC)
+  - label: Email Land Use Assistance
+    detail: DSDZoningSitePlan@austintexas.gov — replies within 2 business days
+    url: mailto:DSDZoningSitePlan@austintexas.gov
+    label_es: Escriba a Land Use Assistance
+    detail_es: DSDZoningSitePlan@austintexas.gov — responden en un plazo de 2 días hábiles
+  - label: Call Development Services
+    detail: 512-978-4000, Mon–Fri 7:45am–4:45pm; call 311 after hours
+    url: tel:+15129784000
+    label_es: Llame a Development Services
+    detail_es: 512-978-4000, de lunes a viernes de 7:45am a 4:45pm; llame al 311 fuera de horario
+
+ingest:
+  source: municode
+  client_name: Austin
+  state: TX
+  # Scope: Title 25 zoning subset for the MVP; widen to all of Title 25 later.
+  root_nodes:
+    - "TIT25LADE_CH25-2ZO"
