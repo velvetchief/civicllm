@@ -3,8 +3,8 @@
   "provider": "ollama",
   "model": "qwen2.5:7b-instruct",
   "embed_model": "nomic-embed-text",
-  "run_at": "2026-10-27T19:27:00+00:00",
-  "passed": 9,
+  "run_at": "2026-10-27T20:07:42+00:00",
+  "passed": 10,
   "total": 10,
   "cases": [
     {
@@ -147,11 +147,12 @@
       "must_contain": [
         "base flood elevation"
       ],
-      "must_cite": "308-14",
-      "passed": false,
-      "reasons": [
-        "no cited source matching ['308-14']"
+      "must_cite": [
+        "308-14",
+        "5.5.15"
       ],
+      "passed": true,
+      "reasons": [],
       "refused": false,
       "grounded": true,
       "answer": "In a special flood hazard area, the lowest floor of a new house must be elevated to two feet above the base flood elevation or the highest adjacent grade, whichever is higher [2][5].",
