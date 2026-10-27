@@ -66,7 +66,7 @@ Add `--out` to save every question, answer, cited source and failure reason as J
 uv run python -m eval.run_eval austin ollama --out eval/results/austin-qwen2.5-7b.json
 ```
 
-The saved runs on Qwen 2.5 7B are in [backend/eval/results](backend/eval/results/). Brownsville scored 9 of 10. In the miss, the answer passed the content check but cited two sources as `[2, 5]`, and the grounding check reads only one number per bracket. Austin scored 8 of 10. The model gave the wrong figures for the SF-3 front yard setback and the SF-3 impervious cover limit, and for impervious cover it also cited the wrong section. An earlier run, which was not saved, scored 10 of 10 and 9 of 10.
+The saved runs on Qwen 2.5 7B are in [backend/eval/results](backend/eval/results/). Brownsville scored 9 of 10. In the miss, the model cited section 5.5.15 of the Unified Development Code, which sets the lowest floor two feet above the base flood elevation. The golden case accepts only the Chapter 308 flood sections, which set it at or above that elevation. Austin scored 8 of 10. The model gave the wrong figures for the SF-3 front yard setback and the SF-3 impervious cover limit, and for impervious cover it also cited the wrong section. An earlier run, which was not saved, scored 10 of 10 and 9 of 10.
 
 Unit tests cover the citation guards, streaming guards, ingestion parsing, and retrieval with rerank:
 

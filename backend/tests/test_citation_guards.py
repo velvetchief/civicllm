@@ -130,3 +130,41 @@ def test_english_pseudo_sentinel_variant_is_a_refusal(tenant):
     answer = _finalize(tenant, "public", raw, _three_chunks(), "ollama", "en")
 
     assert answer.refused
+
+
+def test_combined_citation_bracket_cites_each_source(tenant):
+    """Observed live (Brownsville eval, 2026-10-27): the model cited two excerpts in
+    one bracket, "[2, 5]", and the guard read none of them."""
+    raw = "The maximum height is 35 feet [1, 3]. Setbacks apply [1,2]."
+    answer = _finalize(tenant, "public", raw, _three_chunks(), "ollama", "en")
+
+    assert answer.grounded
+    assert [s.number for s in answer.sources] == [1, 2, 3]
+    # The text is rewritten so the frontend renders one citation chip per source.
+    assert answer.text == "The maximum height is 35 feet [1][3]. Setbacks apply [1][2]."
+
+
+def test_bracketed_figure_is_not_split_into_citations(tenant):
+    raw = "The fee is [1,500] dollars [2]."
+    answer = _finalize(tenant, "public", raw, _three_chunks(), "ollama", "en")
+
+    assert answer.text == raw
+    assert [s.number for s in answer.sources] == [2]
+
+
+def test_bug_report_group_on_five_chunks(tenant):
+    chunks = [make_chunk(i, f"Excerpt {i}.") for i in range(1, 6)]
+    raw = "Build two feet above the base flood elevation [2, 5]."
+    answer = _finalize(tenant, "public", raw, chunks, "ollama", "en")
+
+    assert answer.grounded
+    assert [s.number for s in answer.sources] == [2, 5]
+
+
+def test_group_with_out_of_range_number_is_left_alone(tenant):
+    chunks = [make_chunk(i, f"Excerpt {i}.") for i in range(1, 6)]
+    raw = "Height is 35 feet [2, 9]."
+    answer = _finalize(tenant, "public", raw, chunks, "ollama", "en")
+
+    assert answer.text == raw
+    assert 9 not in [s.number for s in answer.sources]

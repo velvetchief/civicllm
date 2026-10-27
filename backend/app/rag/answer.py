@@ -88,6 +88,24 @@ _REFUSAL_TEXT_ES = (
 )
 
 
+_CITE_GROUP = re.compile(r"\[(\d+(?:\s*,\s*\d+)+)\]")
+
+
+def _split_citation_groups(text: str, n_chunks: int) -> str:
+    """Models sometimes cite several sources in one bracket ("[2, 5]"). Rewrite that
+    as "[2][5]" so the guard below and the frontend's citation chips read each one.
+    A group is split only when every number is a valid excerpt number, so a figure
+    like "[1,500]" stays as written."""
+
+    def split(m: re.Match[str]) -> str:
+        nums = [int(n) for n in m.group(1).split(",")]
+        if not all(1 <= n <= n_chunks for n in nums):
+            return m.group(0)
+        return "".join(f"[{n}]" for n in nums)
+
+    return _CITE_GROUP.sub(split, text)
+
+
 def _cited_numbers(text: str) -> set[int]:
     return {int(n) for n in re.findall(r"\[(\d+)\]", text)}
 
@@ -177,6 +195,7 @@ def _finalize(
     # models sometimes do despite instruction), fall back to verification: the
     # answer's figures must literally appear in retrieved chunks, which then become
     # the cited sources. Verify-the-content beats trust-the-model's-brackets.
+    raw = _split_citation_groups(raw, len(chunks))
     cited = _cited_numbers(raw)
     valid_cited = {n for n in cited if 1 <= n <= len(chunks)}
     if not valid_cited:
