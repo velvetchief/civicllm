@@ -1,0 +1,221 @@
+{
+  "tenant": "austin",
+  "provider": "ollama",
+  "model": "qwen2.5:7b-instruct",
+  "embed_model": "nomic-embed-text",
+  "run_at": "2026-10-27T18:37:26+00:00",
+  "passed": 8,
+  "total": 10,
+  "cases": [
+    {
+      "n": 1,
+      "question": "What is the maximum building height for a home in an SF-3 zone?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "35"
+      ],
+      "must_cite": "25-2-492",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The maximum building height for a home in an SF-3 zone is **35 feet** [3].",
+      "sources": [
+        {
+          "number": 3,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "question": "What is the minimum lot size in an SF-3 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "5,750"
+      ],
+      "must_cite": "25-2-492",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The minimum lot size in an SF-3 district is **5,750 square feet** [4].",
+      "sources": [
+        {
+          "number": 4,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "question": "What is the minimum lot size in an SF-2 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "5,750"
+      ],
+      "must_cite": "25-2-492",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The minimum lot size in an SF-2 district is **5,750 square feet** [3].",
+      "sources": [
+        {
+          "number": 3,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "question": "How tall can a building be in an MF-4 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "60"
+      ],
+      "must_cite": "25-2-492",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The maximum height in an MF-4 district is **60 feet** [4].",
+      "sources": [
+        {
+          "number": 4,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "question": "What is the maximum building height in an SF-1 zone?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "35"
+      ],
+      "must_cite": [
+        "25-2-492",
+        "BUILDING HEIGHT"
+      ],
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The maximum building height in an SF-1 zone is **35 feet** [3].",
+      "sources": [
+        {
+          "number": 3,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "question": "What is the front yard setback for SF-3?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "25"
+      ],
+      "must_cite": "25-2-492",
+      "passed": false,
+      "reasons": [
+        "missing expected figure: '25'"
+      ],
+      "refused": false,
+      "grounded": true,
+      "answer": "The front yard setback for SF-3 is **10 feet** [4].",
+      "sources": [
+        {
+          "number": 4,
+          "section_ref": "§ 25-2-492",
+          "title": "§ 25-2-492 - SITE DEVELOPMENT REGULATIONS."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "question": "What is the maximum impervious cover in an SF-3 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "45"
+      ],
+      "must_cite": "25-2-492",
+      "passed": false,
+      "reasons": [
+        "missing expected figure: '45'",
+        "no cited source matching ['25-2-492']"
+      ],
+      "refused": false,
+      "grounded": true,
+      "answer": "The maximum impervious cover in an SF-3 district is **50 percent** [2]. However, this limit can be increased to **55 percent** if the building official determines that the requirements of the section are satisfied [2].",
+      "sources": [
+        {
+          "number": 2,
+          "section_ref": "§ 25-2-556",
+          "title": "§ 25-2-556 - ADDITIONAL IMPERVIOUS COVER IN SINGLE-FAMILY STANDARD LOT (SF-2) AND FAMILY RESIDENCE (SF-3) DISTRICTS."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "question": "What zoning districts allow a bed and breakfast as a permitted or conditional use?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [],
+      "must_cite": "25-2",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "Bed and breakfast (Group 1) is permitted [6], and bed and breakfast (Group 2) is also permitted [6].",
+      "sources": [
+        {
+          "number": 6,
+          "section_ref": "§ 25-2-491",
+          "title": "§ 25-2-491 - PERMITTED, CONDITIONAL, AND PROHIBITED USES."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "question": "What is the tallest roller coaster at Disney World?",
+      "language": "en",
+      "expect_refusal": true,
+      "must_contain": [],
+      "must_cite": null,
+      "passed": true,
+      "reasons": [],
+      "refused": true,
+      "grounded": true,
+      "answer": "I couldn't find this in the Austin Land Development Code (Title 25). Rather than guess, I'm telling you it isn't covered by the sources I can search. Try rephrasing, or consult City of Austin — Development Services directly.",
+      "sources": []
+    },
+    {
+      "n": 10,
+      "question": "What is the maximum building height in downtown Seattle?",
+      "language": "en",
+      "expect_refusal": true,
+      "must_contain": [],
+      "must_cite": null,
+      "passed": true,
+      "reasons": [],
+      "refused": true,
+      "grounded": true,
+      "answer": "I couldn't find this in the Austin Land Development Code (Title 25). Rather than guess, I'm telling you it isn't covered by the sources I can search. Try rephrasing, or consult City of Austin — Development Services directly.",
+      "sources": []
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "tenant": "brownsville",
+  "provider": "ollama",
+  "model": "qwen2.5:7b-instruct",
+  "embed_model": "nomic-embed-text",
+  "run_at": "2026-10-27T18:21:20+00:00",
+  "passed": 9,
+  "total": 10,
+  "cases": [
+    {
+      "n": 1,
+      "question": "What is the maximum building height in the R-1 single-family district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "35"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The maximum building height in the R-1 single-family district is **35 feet** [2].",
+      "sources": [
+        {
+          "number": 2,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "question": "What is the minimum lot area in the R-1 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "5,000"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The minimum lot area in the R-1 district is **5,000 sq.ft.** [1].",
+      "sources": [
+        {
+          "number": 1,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "question": "What is the minimum lot width in the R-1 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "50"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The minimum lot width in the R-1 district is **50 feet** [1].",
+      "sources": [
+        {
+          "number": 1,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "question": "What is the minimum lot area in the R-2 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "2,000"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The minimum lot area in the R-2 district is **2,000 sq.ft.** [1].",
+      "sources": [
+        {
+          "number": 1,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "question": "How wide does a lot need to be for a townhome in the R-2 district?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "25"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The lot width for townhomes in the R-2 district must be at least **25 feet** [1].",
+      "sources": [
+        {
+          "number": 1,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "question": "¿Cuál es la altura máxima de construcción en el distrito R-1?",
+      "language": "es",
+      "expect_refusal": false,
+      "must_contain": [
+        "35"
+      ],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "La altura máxima de construcción en el distrito R-1 es **35 pies** [4].",
+      "sources": [
+        {
+          "number": 4,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "question": "In a special flood hazard area, how high must the lowest floor of a new house be built?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [
+        "base flood elevation"
+      ],
+      "must_cite": "308-14",
+      "passed": false,
+      "reasons": [
+        "no cited source matching ['308-14']",
+        "answer not grounded (no valid citations)"
+      ],
+      "refused": false,
+      "grounded": false,
+      "answer": "In a special flood hazard area, the lowest floor of a new house must be elevated to two feet above the base flood elevation [2, 5].",
+      "sources": []
+    },
+    {
+      "n": 8,
+      "question": "Which zoning districts exist in Brownsville for residential development?",
+      "language": "en",
+      "expect_refusal": false,
+      "must_contain": [],
+      "must_cite": "4.3.1",
+      "passed": true,
+      "reasons": [],
+      "refused": false,
+      "grounded": true,
+      "answer": "The zoning districts for residential development in Brownsville include the Agriculture (AG) District [4], the Traditional Neighborhood (TN) District [2], the Traditional Neighborhood Corridor (TN-C) District [3], and the Traditional Neighborhood Mixed Use (TN-MU) District [5].",
+      "sources": [
+        {
+          "number": 2,
+          "section_ref": null,
+          "title": "4.3.3 - Traditional Neighborhood and Form Districts."
+        },
+        {
+          "number": 3,
+          "section_ref": null,
+          "title": "4.3.3 - Traditional Neighborhood and Form Districts."
+        },
+        {
+          "number": 4,
+          "section_ref": null,
+          "title": "4.3.1 - Residential Zoning Districts."
+        },
+        {
+          "number": 5,
+          "section_ref": null,
+          "title": "4.3.3 - Traditional Neighborhood and Form Districts."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "question": "What is the maximum building height in an SF-3 zone in Austin?",
+      "language": "en",
+      "expect_refusal": true,
+      "must_contain": [],
+      "must_cite": null,
+      "passed": true,
+      "reasons": [],
+      "refused": true,
+      "grounded": true,
+      "answer": "I couldn't find this in the Brownsville Development Regulations (Unified Development Code). Rather than guess, I'm telling you it isn't covered by the sources I can search. Try rephrasing, or consult City of Brownsville — Planning & Redevelopment Services directly.",
+      "sources": []
+    },
+    {
+      "n": 10,
+      "question": "What is the tallest roller coaster at Disney World?",
+      "language": "en",
+      "expect_refusal": true,
+      "must_contain": [],
+      "must_cite": null,
+      "passed": true,
+      "reasons": [],
+      "refused": true,
+      "grounded": true,
+      "answer": "I couldn't find this in the Brownsville Development Regulations (Unified Development Code). Rather than guess, I'm telling you it isn't covered by the sources I can search. Try rephrasing, or consult City of Brownsville — Planning & Redevelopment Services directly.",
+      "sources": []
+    }
+  ]
+}

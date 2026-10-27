@@ -1,30 +1,33 @@
 """Golden-set eval: every answer must (a) contain the known-correct figure,
 (b) cite the governing section, and (c) refuse cleanly on out-of-corpus questions.
 
-Usage:  uv run python -m eval.run_eval [tenant] [provider]
+Usage:  uv run python -m eval.run_eval [tenant] [provider] [--out PATH]
         uv run python -m eval.run_eval austin ollama
+        uv run python -m eval.run_eval austin ollama --out eval/results/austin-ollama.json
         uv run python -m eval.run_eval austin --retrieval   # retrieval-only check
 """
 
+import argparse
 import asyncio
 import json
-import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 from app.config import settings
-from app.db import init_db
-from app.rag.answer import answer_question
+from app.db import init_db, pool
+from app.rag.answer import Answer, answer_question
 from app.rag.retrieve import retrieve
 from app.tenant import load_tenant
 
 
-async def run(tenant_id: str, provider: str | None) -> int:
+async def run(tenant_id: str, provider: str | None, out: Path | None = None) -> int:
     init_db()
     tenant = load_tenant(tenant_id)
     golden = Path(__file__).parent / f"golden_{tenant_id}.jsonl"
     cases = [json.loads(line) for line in golden.read_text().splitlines() if line.strip()]
 
     passed = 0
+    records = []
     for i, case in enumerate(cases, 1):
         result = await answer_question(
             tenant,
@@ -35,6 +38,7 @@ async def run(tenant_id: str, provider: str | None) -> int:
         )
         ok, reasons = check(case, result)
         passed += ok
+        records.append(case_record(i, case, result, ok, reasons))
         status = "PASS" if ok else "FAIL"
         print(f"[{i:02d}] {status}  {case['question'][:70]}")
         if not ok:
@@ -43,7 +47,43 @@ async def run(tenant_id: str, provider: str | None) -> int:
             print(f"      answer: {result.text[:200]}")
 
     print(f"\n{passed}/{len(cases)} passed  (provider={provider or 'default'})")
+    if out:
+        resolved = provider or settings.llm_provider
+        report = {
+            "tenant": tenant_id,
+            "provider": resolved,
+            "model": settings.ollama_model if resolved == "ollama" else settings.anthropic_model,
+            "embed_model": settings.ollama_embed_model,
+            "run_at": datetime.now(UTC).isoformat(timespec="seconds"),
+            "passed": passed,
+            "total": len(cases),
+            "cases": records,
+        }
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+        print(f"saved {out}")
     return 0 if passed == len(cases) else 1
+
+
+def case_record(n: int, case: dict, result: Answer, ok: bool, reasons: list[str]) -> dict:
+    """One saved row: the golden case, the full answer and why it passed or failed."""
+    return {
+        "n": n,
+        "question": case["question"],
+        "language": case.get("language", "en"),
+        "expect_refusal": bool(case.get("expect_refusal")),
+        "must_contain": case.get("must_contain", []),
+        "must_cite": case.get("must_cite"),
+        "passed": ok,
+        "reasons": reasons,
+        "refused": result.refused,
+        "grounded": result.grounded,
+        "answer": result.text,
+        "sources": [
+            {"number": s.number, "section_ref": s.section_ref, "title": s.title}
+            for s in result.sources
+        ],
+    }
 
 
 def check(case: dict, result) -> tuple[bool, list[str]]:
@@ -118,8 +158,17 @@ async def run_retrieval_only(tenant_id: str) -> int:
 
 
 if __name__ == "__main__":
-    tenant_arg = sys.argv[1] if len(sys.argv) > 1 else "austin"
-    if "--retrieval" in sys.argv:
-        raise SystemExit(asyncio.run(run_retrieval_only(tenant_arg)))
-    provider_arg = sys.argv[2] if len(sys.argv) > 2 else None
-    raise SystemExit(asyncio.run(run(tenant_arg, provider_arg)))
+    parser = argparse.ArgumentParser(description="Run a tenant's golden-set eval.")
+    parser.add_argument("tenant", nargs="?", default="austin")
+    parser.add_argument("provider", nargs="?", default=None)
+    parser.add_argument("--retrieval", action="store_true", help="retrieval-only check")
+    parser.add_argument("--out", type=Path, help="save every case and answer as JSON")
+    args = parser.parse_args()
+    try:
+        if args.retrieval:
+            code = asyncio.run(run_retrieval_only(args.tenant))
+        else:
+            code = asyncio.run(run(args.tenant, args.provider, args.out))
+    finally:
+        pool.close()  # an unclosed pool raises a finalizer error at interpreter exit
+    raise SystemExit(code)
